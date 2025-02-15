@@ -4,10 +4,14 @@ const productRoute = require("./routes/productRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
 const Product = require("./module/product.module.js");
 const cors = require("cors");
+const dotenv = require("dotenv");
 const app = express();
 
 
 app.use(express.json());
+app.use(cors());
+
+dotenv.config();
 
 app.get('/', function (req, res) {
   res.send('HELLO EVAKEMS')
@@ -16,9 +20,9 @@ app.get('/', function (req, res) {
 app.use("/api/product", productRoute);
 app.use("/api/user", userRoutes);
 
-app.use(cors());
 
-app.listen(8500, () => {
+
+app.listen(process.env.PORT, () => {
     console.log('server is running in port 8500');
 });
 
@@ -26,7 +30,7 @@ app.listen(8500, () => {
 
 mongoose
 .connect(
-    "mongodb+srv://drevanskemka:S3QlGhtMKrcJrKHv@cluster0.l2tby.mongodb.net/"
+    process.env.MONGO_URL
 )
 .then(()  =>  {
     console.log("database connected");

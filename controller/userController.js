@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
    //find the user by userName
    const user = await User.findOne({ userName });
    if (!user) {
-    return res.status(404).json({ message: "email not found" });
+    return res.status(404).json({ message: "Invalid userName" });
    }
    console.log(user);
    //COMPARE PASSWORD
@@ -78,10 +78,10 @@ const loginUser = async (req, res) => {
    if (!isMatch) {
     return res.status(400).json({ message: "Invalid password" });
    }
+   res.status(200).json(userResponse);
 
-
-} catch (error) {
-
+}  catch (error) {
+    res.status(500).json({ message: "Error logging in", error });
 }
 };
 
